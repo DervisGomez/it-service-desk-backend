@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RequestStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
+enum RequestPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Technician {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  requests Request[]
+
+  @@map("technicians")
+}
+
+model ServiceType {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  requests Request[]
+
+  @@map("service_types")
+}
+
+model Request {
+  id          Int             @id @default(autoincrement())
+  title       String
+  description String
+  priority    RequestPriority @default(MEDIUM)
+  status      RequestStatus   @default(PENDING)
+
+  technicianId  Int?
+  serviceTypeId Int
+
+  technician  Technician? @relation(fields: [technicianId], references: [id])
+  serviceType ServiceType @relation(fields: [serviceTypeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([technicianId])
+  @@index([serviceTypeId])
+  @@index([status])
+  @@index([priority])
+  @@map("requests")
+}
