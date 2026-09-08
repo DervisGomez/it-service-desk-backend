@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
-import requestRoutes from "./features/requests/request.routes";
-import { errorMiddleware } from "./middlewares/error.middleware";
+import requestRoutes from "./features/requests/request.routes.js";
+import serviceTypeRoutes from "./features/service-types/service-type.routes.js";
+import technicianRoutes from "./features/technicians/technician.routes.js";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 const app = express();
 
@@ -19,6 +21,8 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api/requests", requestRoutes);
+app.use("/api/technicians", technicianRoutes);
+app.use("/api/service-types", serviceTypeRoutes);
 
 app.use(errorMiddleware);
 

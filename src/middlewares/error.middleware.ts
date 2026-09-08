@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import type { ErrorRequestHandler } from "express";
 import { z } from "zod";
-import { errorResponse } from "../utils/api-response";
+import { errorResponse } from "../utils/api-response.js";
 
 const domainErrors: Record<string, { message: string; code: string }> = {
   REQUEST_NOT_FOUND: {

@@ -2,15 +2,15 @@ import { NextFunction, Request, Response } from "express";
 import {
   getValidatedData,
   type ValidatedRequestLocals,
-} from "../../middlewares/validate.middleware";
-import { errorResponse, successResponse } from "../../utils/api-response";
-import { requestService } from "./request.service";
+} from "../../middlewares/validate.middleware.js";
+import { errorResponse, successResponse } from "../../utils/api-response.js";
+import { requestService } from "./request.service.js";
 import type {
   CreateRequestInput,
   RequestIdParams,
   UpdateRequestInput,
-} from "./request.schemas";
-import type { RequestFilters } from "./request.types";
+} from "./request.schemas.js";
+import type { RequestFilters } from "./request.types.js";
 
 type ValidatedResponse = Response<unknown, ValidatedRequestLocals>;
 

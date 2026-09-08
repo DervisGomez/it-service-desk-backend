@@ -14,11 +14,11 @@ const { repository } = vi.hoisted(() => ({
   },
 }));
 
-vi.mock("./request.repository", () => ({
+vi.mock("./request.repository.js", () => ({
   requestRepository: repository,
 }));
 
-import { RequestService } from "./request.service";
+import { RequestService } from "./request.service.js";
 
 const validCreateInput = {
   title: "Acceso al sistema",

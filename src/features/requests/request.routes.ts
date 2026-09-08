@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { validate } from "../../middlewares/validate.middleware";
-import { requestController } from "./request.controller";
+import { validate } from "../../middlewares/validate.middleware.js";
+import { requestController } from "./request.controller.js";
 import {
   createRequestSchema,
   requestIdSchema,
   requestQuerySchema,
   updateRequestSchema,
-} from "./request.schemas";
+} from "./request.schemas.js";
 
 const router = Router();
 

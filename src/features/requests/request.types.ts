@@ -1,3 +1,3 @@
-import type { RequestQuery } from "./request.schemas";
+import type { RequestQuery } from "./request.schemas.js";
 
 export type RequestFilters = RequestQuery;

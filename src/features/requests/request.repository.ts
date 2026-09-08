@@ -1,6 +1,6 @@
 import { Prisma, RequestStatus } from "@prisma/client";
-import { prisma } from "../../config/prisma";
-import type { RequestFilters } from "./request.types";
+import { prisma } from "../../config/prisma.js";
+import type { RequestFilters } from "./request.types.js";
 
 export class RequestRepository {
   async findAll(filters: RequestFilters) {

@@ -1,10 +1,10 @@
 import { RequestPriority, RequestStatus } from "@prisma/client";
-import { requestRepository } from "./request.repository";
+import { requestRepository } from "./request.repository.js";
 import type {
   CreateRequestInput,
   UpdateRequestInput,
-} from "./request.schemas";
-import type { RequestFilters } from "./request.types";
+} from "./request.schemas.js";
+import type { RequestFilters } from "./request.types.js";
 
 export class RequestService {
   async getAll(filters: RequestFilters) {
