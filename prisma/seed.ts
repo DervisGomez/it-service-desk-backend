@@ -1,9 +1,5 @@
 import "dotenv/config";
-import {
-  PrismaClient,
-  RequestPriority,
-  RequestStatus,
-} from "@prisma/client";
+import { PrismaClient, RequestPriority, RequestStatus } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 const connectionString = process.env.DATABASE_URL;
@@ -65,7 +61,8 @@ async function main() {
     prisma.serviceType.create({
       data: {
         name: "Mantenimiento de equipos",
-        description: "Diagnóstico y mantenimiento preventivo o correctivo de equipos.",
+        description:
+          "Diagnóstico y mantenimiento preventivo o correctivo de equipos.",
       },
     }),
     prisma.serviceType.create({
@@ -77,19 +74,22 @@ async function main() {
     prisma.serviceType.create({
       data: {
         name: "Soporte de red",
-        description: "Atención de problemas relacionados con conectividad y red.",
+        description:
+          "Atención de problemas relacionados con conectividad y red.",
       },
     }),
     prisma.serviceType.create({
       data: {
         name: "Gestión de accesos",
-        description: "Creación, modificación o recuperación de accesos a sistemas.",
+        description:
+          "Creación, modificación o recuperación de accesos a sistemas.",
       },
     }),
     prisma.serviceType.create({
       data: {
         name: "Mantenimiento de impresoras",
-        description: "Soporte y mantenimiento de impresoras y dispositivos de impresión.",
+        description:
+          "Soporte y mantenimiento de impresoras y dispositivos de impresión.",
       },
     }),
   ]);
@@ -150,8 +150,7 @@ async function main() {
       },
       {
         title: "Revisión de impresora de contabilidad",
-        description:
-          "La impresora presenta atascos frecuentes de papel.",
+        description: "La impresora presenta atascos frecuentes de papel.",
         priority: RequestPriority.MEDIUM,
         status: RequestStatus.IN_PROGRESS,
         technicianId: technicians[0].id,

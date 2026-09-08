@@ -10,9 +10,17 @@ import {
 
 const router = Router();
 
-router.get("/", validate(requestQuerySchema, "query"), requestController.getAll);
+router.get(
+  "/",
+  validate(requestQuerySchema, "query"),
+  requestController.getAll,
+);
 router.get("/dashboard", requestController.dashboard);
-router.get("/:id", validate(requestIdSchema, "params"), requestController.getById);
+router.get(
+  "/:id",
+  validate(requestIdSchema, "params"),
+  requestController.getById,
+);
 router.post("/", validate(createRequestSchema), requestController.create);
 router.put(
   "/:id",
@@ -20,6 +28,10 @@ router.put(
   validate(updateRequestSchema),
   requestController.update,
 );
-router.delete("/:id", validate(requestIdSchema, "params"), requestController.delete);
+router.delete(
+  "/:id",
+  validate(requestIdSchema, "params"),
+  requestController.delete,
+);
 
 export default router;

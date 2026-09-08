@@ -48,7 +48,12 @@ export const errorMiddleware: ErrorRequestHandler = (
     }
 
     if (error.code === "P2025") {
-      return errorResponse(res, "El recurso no existe", "RESOURCE_NOT_FOUND", 404);
+      return errorResponse(
+        res,
+        "El recurso no existe",
+        "RESOURCE_NOT_FOUND",
+        404,
+      );
     }
 
     if (error.code === "P2003") {

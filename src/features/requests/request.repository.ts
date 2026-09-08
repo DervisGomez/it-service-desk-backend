@@ -45,7 +45,13 @@ export class RequestRepository {
       prisma.request.count({ where }),
     ]);
 
-    return { requests, total, page, limit, totalPages: Math.ceil(total / limit) };
+    return {
+      requests,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findById(id: number) {

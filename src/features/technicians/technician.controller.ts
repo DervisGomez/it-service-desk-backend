@@ -6,7 +6,11 @@ export class TechnicianController {
   async getAll(_req: Request, res: Response, next: NextFunction) {
     try {
       const technicians = await technicianService.getActive();
-      return successResponse(res, technicians, "Técnicos obtenidos correctamente");
+      return successResponse(
+        res,
+        technicians,
+        "Técnicos obtenidos correctamente",
+      );
     } catch (error) {
       next(error);
     }

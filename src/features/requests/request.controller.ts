@@ -20,7 +20,12 @@ const handleRequestNotFound = (
   next: NextFunction,
 ) => {
   if (error instanceof Error && error.message === "REQUEST_NOT_FOUND") {
-    return errorResponse(res, "La solicitud no existe", "REQUEST_NOT_FOUND", 404);
+    return errorResponse(
+      res,
+      "La solicitud no existe",
+      "REQUEST_NOT_FOUND",
+      404,
+    );
   }
 
   return next(error);
@@ -33,9 +38,15 @@ export class RequestController {
       const { requests, total, page, limit, totalPages } =
         await requestService.getAll(filters);
 
-      return successResponse(res, requests, "Solicitudes obtenidas correctamente", 200, {
-        pagination: { page, limit, total, totalPages },
-      });
+      return successResponse(
+        res,
+        requests,
+        "Solicitudes obtenidas correctamente",
+        200,
+        {
+          pagination: { page, limit, total, totalPages },
+        },
+      );
     } catch (error) {
       next(error);
     }
@@ -55,7 +66,12 @@ export class RequestController {
     try {
       const input = getValidatedData<CreateRequestInput>(res, "body");
       const request = await requestService.create(input);
-      return successResponse(res, request, "Solicitud creada correctamente", 201);
+      return successResponse(
+        res,
+        request,
+        "Solicitud creada correctamente",
+        201,
+      );
     } catch (error) {
       next(error);
     }
@@ -66,7 +82,11 @@ export class RequestController {
       const { id } = getValidatedData<RequestIdParams>(res, "params");
       const input = getValidatedData<UpdateRequestInput>(res, "body");
       const request = await requestService.update(id, input);
-      return successResponse(res, request, "Solicitud actualizada correctamente");
+      return successResponse(
+        res,
+        request,
+        "Solicitud actualizada correctamente",
+      );
     } catch (error) {
       handleRequestNotFound(error, res, next);
     }
@@ -85,7 +105,11 @@ export class RequestController {
   async dashboard(_req: Request, res: Response, next: NextFunction) {
     try {
       const dashboard = await requestService.getDashboard();
-      return successResponse(res, dashboard, "Dashboard obtenido correctamente");
+      return successResponse(
+        res,
+        dashboard,
+        "Dashboard obtenido correctamente",
+      );
     } catch (error) {
       next(error);
     }

@@ -48,7 +48,9 @@ export class RequestService {
 
     return requestRepository.update(id, {
       ...(input.title !== undefined && { title: input.title }),
-      ...(input.description !== undefined && { description: input.description }),
+      ...(input.description !== undefined && {
+        description: input.description,
+      }),
       ...(input.priority !== undefined && { priority: input.priority }),
       ...(input.status !== undefined && { status: input.status }),
       ...(input.serviceTypeId !== undefined && {
