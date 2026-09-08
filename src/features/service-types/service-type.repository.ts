@@ -1,8 +1,10 @@
 import { prisma } from "../../config/prisma.js";
+import { PrismaClient } from "@prisma/client";
 
 export class ServiceTypeRepository {
+  constructor(private readonly db: PrismaClient = prisma) {}
   async findActive() {
-    return prisma.serviceType.findMany({
+    return this.db.serviceType.findMany({
       where: { active: true },
       orderBy: { name: "asc" },
       select: {

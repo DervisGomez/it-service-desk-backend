@@ -1,8 +1,10 @@
-import { Prisma, RequestStatus } from "@prisma/client";
+import { Prisma, PrismaClient, RequestStatus } from "@prisma/client";
 import { prisma } from "../../config/prisma.js";
 import type { RequestFilters } from "./request.types.js";
 
 export class RequestRepository {
+  constructor(private readonly db: PrismaClient = prisma) {}
+
   async findAll(filters: RequestFilters) {
     const { page, limit, ...whereFilters } = filters;
 
@@ -35,14 +37,14 @@ export class RequestRepository {
 
     const skip = (page - 1) * limit;
     const [requests, total] = await Promise.all([
-      prisma.request.findMany({
+      this.db.request.findMany({
         where,
         include: { technician: true, serviceType: true },
         orderBy: { createdAt: "desc" },
         skip,
         take: limit,
       }),
-      prisma.request.count({ where }),
+      this.db.request.count({ where }),
     ]);
 
     return {
@@ -55,7 +57,7 @@ export class RequestRepository {
   }
 
   async findById(id: number) {
-    return prisma.request.findUnique({
+    return this.db.request.findUnique({
       where: { id },
       include: { technician: true, serviceType: true },
     });
@@ -76,14 +78,14 @@ export class RequestRepository {
   }
 
   async create(data: Prisma.RequestCreateInput) {
-    return prisma.request.create({
+    return this.db.request.create({
       data,
       include: { technician: true, serviceType: true },
     });
   }
 
   async update(id: number, data: Prisma.RequestUpdateInput) {
-    return prisma.request.update({
+    return this.db.request.update({
       where: { id },
       data,
       include: { technician: true, serviceType: true },
@@ -91,15 +93,15 @@ export class RequestRepository {
   }
 
   async delete(id: number) {
-    return prisma.request.delete({ where: { id } });
+    return this.db.request.delete({ where: { id } });
   }
 
   async countByStatus(status: RequestStatus) {
-    return prisma.request.count({ where: { status } });
+    return this.db.request.count({ where: { status } });
   }
 
   async count() {
-    return prisma.request.count();
+    return this.db.request.count();
   }
 }
 

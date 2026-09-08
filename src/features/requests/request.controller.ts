@@ -4,7 +4,7 @@ import {
   type ValidatedRequestLocals,
 } from "../../middlewares/validate.middleware.js";
 import { errorResponse, successResponse } from "../../utils/api-response.js";
-import { requestService } from "./request.service.js";
+import { RequestService, requestService } from "./request.service.js";
 import type {
   CreateRequestInput,
   RequestIdParams,
@@ -32,11 +32,15 @@ const handleRequestNotFound = (
 };
 
 export class RequestController {
+  constructor(
+    private readonly service: RequestService = requestService,
+  ) {}
+
   async getAll(_req: Request, res: ValidatedResponse, next: NextFunction) {
     try {
       const filters = getValidatedData<RequestFilters>(res, "query");
       const { requests, total, page, limit, totalPages } =
-        await requestService.getAll(filters);
+        await this.service.getAll(filters);
 
       return successResponse(
         res,
@@ -55,7 +59,7 @@ export class RequestController {
   async getById(_req: Request, res: ValidatedResponse, next: NextFunction) {
     try {
       const { id } = getValidatedData<RequestIdParams>(res, "params");
-      const request = await requestService.getById(id);
+      const request = await this.service.getById(id);
       return successResponse(res, request, "Solicitud obtenida correctamente");
     } catch (error) {
       handleRequestNotFound(error, res, next);
@@ -65,7 +69,7 @@ export class RequestController {
   async create(_req: Request, res: ValidatedResponse, next: NextFunction) {
     try {
       const input = getValidatedData<CreateRequestInput>(res, "body");
-      const request = await requestService.create(input);
+      const request = await this.service.create(input);
       return successResponse(
         res,
         request,
@@ -81,7 +85,7 @@ export class RequestController {
     try {
       const { id } = getValidatedData<RequestIdParams>(res, "params");
       const input = getValidatedData<UpdateRequestInput>(res, "body");
-      const request = await requestService.update(id, input);
+      const request = await this.service.update(id, input);
       return successResponse(
         res,
         request,
@@ -95,7 +99,7 @@ export class RequestController {
   async delete(_req: Request, res: ValidatedResponse, next: NextFunction) {
     try {
       const { id } = getValidatedData<RequestIdParams>(res, "params");
-      await requestService.delete(id);
+      await this.service.delete(id);
       return successResponse(res, null, "Solicitud eliminada correctamente");
     } catch (error) {
       handleRequestNotFound(error, res, next);
@@ -104,7 +108,7 @@ export class RequestController {
 
   async dashboard(_req: Request, res: Response, next: NextFunction) {
     try {
-      const dashboard = await requestService.getDashboard();
+      const dashboard = await this.service.getDashboard();
       return successResponse(
         res,
         dashboard,

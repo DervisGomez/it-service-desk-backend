@@ -1,6 +1,10 @@
 import { Router } from "express";
+
 import { validate } from "../../middlewares/validate.middleware.js";
-import { requestController } from "./request.controller.js";
+import {
+  RequestController,
+  requestController,
+} from "./request.controller.js";
 import {
   createRequestSchema,
   requestIdSchema,
@@ -8,30 +12,48 @@ import {
   updateRequestSchema,
 } from "./request.schemas.js";
 
-const router = Router();
+export const createRequestRoutes = (
+  controller: RequestController = requestController,
+) => {
+  const router = Router();
 
-router.get(
-  "/",
-  validate(requestQuerySchema, "query"),
-  requestController.getAll,
-);
-router.get("/dashboard", requestController.dashboard);
-router.get(
-  "/:id",
-  validate(requestIdSchema, "params"),
-  requestController.getById,
-);
-router.post("/", validate(createRequestSchema), requestController.create);
-router.put(
-  "/:id",
-  validate(requestIdSchema, "params"),
-  validate(updateRequestSchema),
-  requestController.update,
-);
-router.delete(
-  "/:id",
-  validate(requestIdSchema, "params"),
-  requestController.delete,
-);
+  router.get(
+    "/",
+    validate(requestQuerySchema, "query"),
+    controller.getAll.bind(controller),
+  );
 
-export default router;
+  router.get(
+    "/dashboard",
+    controller.dashboard.bind(controller),
+  );
+
+  router.get(
+    "/:id",
+    validate(requestIdSchema, "params"),
+    controller.getById.bind(controller),
+  );
+
+  router.post(
+    "/",
+    validate(createRequestSchema),
+    controller.create.bind(controller),
+  );
+
+  router.put(
+    "/:id",
+    validate(requestIdSchema, "params"),
+    validate(updateRequestSchema),
+    controller.update.bind(controller),
+  );
+
+  router.delete(
+    "/:id",
+    validate(requestIdSchema, "params"),
+    controller.delete.bind(controller),
+  );
+
+  return router;
+};
+
+export default createRequestRoutes();

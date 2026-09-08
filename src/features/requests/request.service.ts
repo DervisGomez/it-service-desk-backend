@@ -1,18 +1,23 @@
 import { RequestPriority, RequestStatus } from "@prisma/client";
-import { requestRepository } from "./request.repository.js";
+import { requestRepository, RequestRepository } from "./request.repository.js";
 import type {
   CreateRequestInput,
   UpdateRequestInput,
 } from "./request.schemas.js";
 import type { RequestFilters } from "./request.types.js";
 
+
 export class RequestService {
+  constructor(
+    private readonly repository: RequestRepository = requestRepository,
+  ) {}
+
   async getAll(filters: RequestFilters) {
-    return requestRepository.findAll(filters);
+    return this.repository.findAll(filters);
   }
 
   async getById(id: number) {
-    const request = await requestRepository.findById(id);
+    const request = await this.repository.findById(id);
     if (!request) throw new Error("REQUEST_NOT_FOUND");
     return request;
   }
@@ -24,7 +29,7 @@ export class RequestService {
       await this.ensureTechnicianExists(input.technicianId);
     }
 
-    return requestRepository.create({
+    return this.repository.create({
       title: input.title,
       description: input.description,
       priority: input.priority ?? RequestPriority.MEDIUM,
@@ -46,7 +51,7 @@ export class RequestService {
       await this.ensureTechnicianExists(input.technicianId);
     }
 
-    return requestRepository.update(id, {
+    return this.repository.update(id, {
       ...(input.title !== undefined && { title: input.title }),
       ...(input.description !== undefined && {
         description: input.description,
@@ -67,18 +72,18 @@ export class RequestService {
 
   async delete(id: number) {
     await this.getById(id);
-    await requestRepository.delete(id);
+    await this.repository.delete(id);
   }
 
   async getDashboard() {
     const [total, pending, assigned, inProgress, resolved, cancelled] =
       await Promise.all([
-        requestRepository.count(),
-        requestRepository.countByStatus(RequestStatus.PENDING),
-        requestRepository.countByStatus(RequestStatus.ASSIGNED),
-        requestRepository.countByStatus(RequestStatus.IN_PROGRESS),
-        requestRepository.countByStatus(RequestStatus.RESOLVED),
-        requestRepository.countByStatus(RequestStatus.CANCELLED),
+        this.repository.count(),
+        this.repository.countByStatus(RequestStatus.PENDING),
+        this.repository.countByStatus(RequestStatus.ASSIGNED),
+        this.repository.countByStatus(RequestStatus.IN_PROGRESS),
+        this.repository.countByStatus(RequestStatus.RESOLVED),
+        this.repository.countByStatus(RequestStatus.CANCELLED),
       ]);
 
     return {
@@ -88,7 +93,7 @@ export class RequestService {
   }
 
   private async ensureTechnicianExists(id: number) {
-    const technician = await requestRepository.findTechnicianById(id);
+    const technician = await this.repository.findTechnicianById(id);
 
     if (!technician) {
       throw new Error("TECHNICIAN_NOT_FOUND");
@@ -96,7 +101,7 @@ export class RequestService {
   }
 
   private async ensureServiceTypeExists(id: number) {
-    const serviceType = await requestRepository.findServiceTypeById(id);
+    const serviceType = await this.repository.findServiceTypeById(id);
 
     if (!serviceType) {
       throw new Error("SERVICE_TYPE_NOT_FOUND");
