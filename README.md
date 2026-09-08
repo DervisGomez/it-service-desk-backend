@@ -160,3 +160,4 @@ npm run check
 | [04-api.md](./docs/04-api.md)                   | Endpoints, validaciones, respuestas y errores |
 | [05-development.md](./docs/05-development.md)   | Entorno, Docker, Prisma, tests y calidad      |
 | [06-decisions.md](./docs/06-decisions.md)       | Decisiones técnicas y justificación           |
+```
