@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import type { ErrorRequestHandler } from "express";
 import { z } from "zod";
+import { env } from "../config/env.js";
 import { errorResponse } from "../utils/api-response.js";
 
 const domainErrors: Record<string, { message: string; code: string }> = {
@@ -66,7 +67,7 @@ export const errorMiddleware: ErrorRequestHandler = (
     }
   }
 
-  if (process.env.NODE_ENV !== "production") {
+  if (env.nodeEnv !== "production") {
     console.error(error);
   }
 
