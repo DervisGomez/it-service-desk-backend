@@ -6,7 +6,6 @@ import type {
 } from "./request.schemas.js";
 import type { RequestFilters } from "./request.types.js";
 
-
 export class RequestService {
   constructor(
     private readonly repository: RequestRepository = requestRepository,

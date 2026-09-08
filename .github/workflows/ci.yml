@@ -1,0 +1,70 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    name: Lint, Test and Build
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: it_service_desk_test
+          POSTGRES_USER: it_service_desk_user
+          POSTGRES_PASSWORD: it_service_desk_test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U it_service_desk_user -d it_service_desk_test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      NODE_ENV: test
+      PORT: 3000
+      CORS_ORIGIN: http://localhost:4200
+      DATABASE_URL: postgresql://it_service_desk_user:it_service_desk_test_password@localhost:5432/it_service_desk_test
+      DATABASE_URL_TEST: postgresql://it_service_desk_user:it_service_desk_test_password@localhost:5432/it_service_desk_test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply database migrations
+        run: npx prisma migrate deploy
+
+      - name: Seed test database
+        run: npm run db:seed
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build

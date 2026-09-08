@@ -32,9 +32,7 @@ const handleRequestNotFound = (
 };
 
 export class RequestController {
-  constructor(
-    private readonly service: RequestService = requestService,
-  ) {}
+  constructor(private readonly service: RequestService = requestService) {}
 
   async getAll(_req: Request, res: ValidatedResponse, next: NextFunction) {
     try {

@@ -1,10 +1,7 @@
 import { Router } from "express";
 
 import { validate } from "../../middlewares/validate.middleware.js";
-import {
-  RequestController,
-  requestController,
-} from "./request.controller.js";
+import { RequestController, requestController } from "./request.controller.js";
 import {
   createRequestSchema,
   requestIdSchema,
@@ -23,10 +20,7 @@ export const createRequestRoutes = (
     controller.getAll.bind(controller),
   );
 
-  router.get(
-    "/dashboard",
-    controller.dashboard.bind(controller),
-  );
+  router.get("/dashboard", controller.dashboard.bind(controller));
 
   router.get(
     "/:id",

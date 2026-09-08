@@ -23,16 +23,14 @@ describe("Requests API", () => {
   });
 
   it("POST /api/requests should create and persist a request", async () => {
-    const response = await request(app)
-      .post("/api/requests")
-      .send({
-        title: "Mantenimiento de impresora",
-        description:
-          "La impresora del área administrativa presenta problemas de impresión.",
-        priority: "HIGH",
-        technicianId: 1,
-        serviceTypeId: 5,
-      });
+    const response = await request(app).post("/api/requests").send({
+      title: "Mantenimiento de impresora",
+      description:
+        "La impresora del área administrativa presenta problemas de impresión.",
+      priority: "HIGH",
+      technicianId: 1,
+      serviceTypeId: 5,
+    });
 
     expect(response.status).toBe(201);
     expect(response.body.success).toBe(true);
@@ -89,16 +87,14 @@ describe("Requests API", () => {
   });
 
   it("POST /api/requests should reject a non-existing technician", async () => {
-    const response = await request(app)
-      .post("/api/requests")
-      .send({
-        title: "Mantenimiento de impresora",
-        description:
-          "La impresora del área administrativa presenta problemas de impresión.",
-        priority: "HIGH",
-        technicianId: 99999,
-        serviceTypeId: 5,
-      });
+    const response = await request(app).post("/api/requests").send({
+      title: "Mantenimiento de impresora",
+      description:
+        "La impresora del área administrativa presenta problemas de impresión.",
+      priority: "HIGH",
+      technicianId: 99999,
+      serviceTypeId: 5,
+    });
 
     expect(response.status).toBe(404);
     expect(response.body.success).toBe(false);
@@ -106,27 +102,23 @@ describe("Requests API", () => {
   });
 
   it("PUT /api/requests/:id should update an existing request", async () => {
-    const createResponse = await request(app)
-      .post("/api/requests")
-      .send({
-        title: "Solicitud para actualizar",
-        description:
-          "Solicitud creada para verificar el endpoint de actualización.",
-        priority: "LOW",
-        serviceTypeId: 1,
-      });
+    const createResponse = await request(app).post("/api/requests").send({
+      title: "Solicitud para actualizar",
+      description:
+        "Solicitud creada para verificar el endpoint de actualización.",
+      priority: "LOW",
+      serviceTypeId: 1,
+    });
 
     expect(createResponse.status).toBe(201);
 
     const requestId = createResponse.body.data.id;
 
-    const response = await request(app)
-      .put(`/api/requests/${requestId}`)
-      .send({
-        priority: "CRITICAL",
-        status: "IN_PROGRESS",
-        technicianId: 1,
-      });
+    const response = await request(app).put(`/api/requests/${requestId}`).send({
+      priority: "CRITICAL",
+      status: "IN_PROGRESS",
+      technicianId: 1,
+    });
 
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
@@ -140,15 +132,13 @@ describe("Requests API", () => {
   });
 
   it("DELETE /api/requests/:id should delete an existing request", async () => {
-    const createResponse = await request(app)
-      .post("/api/requests")
-      .send({
-        title: "Solicitud para eliminar",
-        description:
-          "Solicitud creada para verificar el endpoint de eliminación.",
-        priority: "LOW",
-        serviceTypeId: 1,
-      });
+    const createResponse = await request(app).post("/api/requests").send({
+      title: "Solicitud para eliminar",
+      description:
+        "Solicitud creada para verificar el endpoint de eliminación.",
+      priority: "LOW",
+      serviceTypeId: 1,
+    });
 
     expect(createResponse.status).toBe(201);
 

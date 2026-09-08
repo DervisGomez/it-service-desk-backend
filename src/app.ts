@@ -10,6 +10,9 @@ import serviceTypeRoutes from "./features/service-types/service-type.routes.js";
 import technicianRoutes from "./features/technicians/technician.routes.js";
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
+
 const app = express();
 
 app.use(helmet());
@@ -35,6 +38,8 @@ app.use("/api/health", healthRoutes);
 app.use("/api/requests", requestRoutes);
 app.use("/api/technicians", technicianRoutes);
 app.use("/api/service-types", serviceTypeRoutes);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(errorMiddleware);
 
