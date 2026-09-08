@@ -76,24 +76,24 @@ Tras las rutas se monta `errorMiddleware` como manejador central de errores.
 
 ## Responsabilidades por capa
 
-| Capa | Responsabilidad | Ubicación |
-|---|---|---|
-| **Routes** | Define endpoints HTTP y encadena middlewares de validación | `*.routes.ts` |
-| **Controller** | Traduce HTTP ↔ servicio; formatea respuestas con `successResponse` | `*.controller.ts` |
-| **Service** | Reglas de negocio (existencia de técnico/tipo, dashboard) | `*.service.ts` |
-| **Repository** | Consultas Prisma; filtros, paginación e includes | `*.repository.ts` |
-| **validate** | Parseo y validación Zod de body, params o query | `validate.middleware.ts` |
-| **error** | Mapeo de `ZodError`, errores de dominio y códigos Prisma | `error.middleware.ts` |
+| Capa           | Responsabilidad                                                    | Ubicación                |
+| -------------- | ------------------------------------------------------------------ | ------------------------ |
+| **Routes**     | Define endpoints HTTP y encadena middlewares de validación         | `*.routes.ts`            |
+| **Controller** | Traduce HTTP ↔ servicio; formatea respuestas con `successResponse` | `*.controller.ts`        |
+| **Service**    | Reglas de negocio (existencia de técnico/tipo, dashboard)          | `*.service.ts`           |
+| **Repository** | Consultas Prisma; filtros, paginación e includes                   | `*.repository.ts`        |
+| **validate**   | Parseo y validación Zod de body, params o query                    | `validate.middleware.ts` |
+| **error**      | Mapeo de `ZodError`, errores de dominio y códigos Prisma           | `error.middleware.ts`    |
 
 ## Montaje de rutas
 
-| Prefijo | Módulo |
-|---|---|
-| `/api/health` | Health |
-| `/api/requests` | Requests |
-| `/api/technicians` | Technicians |
+| Prefijo              | Módulo        |
+| -------------------- | ------------- |
+| `/api/health`        | Health        |
+| `/api/requests`      | Requests      |
+| `/api/technicians`   | Technicians   |
 | `/api/service-types` | Service Types |
-| `/api-docs` | Swagger UI |
+| `/api-docs`          | Swagger UI    |
 
 En solicitudes, la ruta `/dashboard` se registra **antes** de `/:id` para evitar colisión con el parámetro `id`.
 
@@ -106,9 +106,9 @@ Todas las respuestas JSON siguen el contrato definido en `src/utils/api-response
 ```json
 {
   "success": true,
-  "data": { },
+  "data": {},
   "message": "Mensaje descriptivo",
-  "meta": { }
+  "meta": {}
 }
 ```
 
@@ -121,7 +121,7 @@ Todas las respuestas JSON siguen el contrato definido en `src/utils/api-response
   "success": false,
   "message": "Descripción del error",
   "code": "CODIGO_ERROR",
-  "errors": [ ]
+  "errors": []
 }
 ```
 

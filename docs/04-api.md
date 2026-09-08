@@ -66,15 +66,15 @@ Lista solicitudes paginadas con filtros opcionales. Orden: `createdAt` descenden
 
 **Query parameters**
 
-| Parámetro | Tipo | Validación | Predeterminado |
-|---|---|---|---|
-| `search` | string | Trim; busca en `title` y `description` (insensible a mayúsculas) | — |
-| `status` | enum | `PENDING`, `ASSIGNED`, `IN_PROGRESS`, `RESOLVED`, `CANCELLED` | — |
-| `priority` | enum | `LOW`, `MEDIUM`, `HIGH`, `CRITICAL` | — |
-| `technicianId` | number | Entero positivo | — |
-| `serviceTypeId` | number | Entero positivo | — |
-| `page` | number | Entero >= 1 | `1` |
-| `limit` | number | Entero 1–100 | `10` |
+| Parámetro       | Tipo   | Validación                                                       | Predeterminado |
+| --------------- | ------ | ---------------------------------------------------------------- | -------------- |
+| `search`        | string | Trim; busca en `title` y `description` (insensible a mayúsculas) | —              |
+| `status`        | enum   | `PENDING`, `ASSIGNED`, `IN_PROGRESS`, `RESOLVED`, `CANCELLED`    | —              |
+| `priority`      | enum   | `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`                              | —              |
+| `technicianId`  | number | Entero positivo                                                  | —              |
+| `serviceTypeId` | number | Entero positivo                                                  | —              |
+| `page`          | number | Entero >= 1                                                      | `1`            |
+| `limit`         | number | Entero 1–100                                                     | `10`           |
 
 **Respuesta 200**
 
@@ -155,9 +155,9 @@ Obtiene una solicitud por ID con relaciones incluidas.
 
 **Path parameters**
 
-| Parámetro | Validación |
-|---|---|
-| `id` | Entero positivo (coerción desde string) |
+| Parámetro | Validación                              |
+| --------- | --------------------------------------- |
+| `id`      | Entero positivo (coerción desde string) |
 
 **Respuesta 200** — Objeto `Request` en `data`.
 
@@ -181,13 +181,13 @@ Crea una solicitud. Estado inicial: `PENDING`. Prioridad: la enviada o `MEDIUM` 
 
 **Body (JSON)**
 
-| Campo | Tipo | Requerido | Validación |
-|---|---|---|---|
-| `title` | string | Sí | Trim; 5–120 caracteres |
-| `description` | string | Sí | Trim; 10–1000 caracteres |
-| `serviceTypeId` | number | Sí | Entero positivo; debe existir |
-| `priority` | enum | No | `LOW`, `MEDIUM`, `HIGH`, `CRITICAL` |
-| `technicianId` | number | No | Entero positivo; debe existir si se envía |
+| Campo           | Tipo   | Requerido | Validación                                |
+| --------------- | ------ | --------- | ----------------------------------------- |
+| `title`         | string | Sí        | Trim; 5–120 caracteres                    |
+| `description`   | string | Sí        | Trim; 10–1000 caracteres                  |
+| `serviceTypeId` | number | Sí        | Entero positivo; debe existir             |
+| `priority`      | enum   | No        | `LOW`, `MEDIUM`, `HIGH`, `CRITICAL`       |
+| `technicianId`  | number | No        | Entero positivo; debe existir si se envía |
 
 **Ejemplo de petición**
 
@@ -207,9 +207,9 @@ Crea una solicitud. Estado inicial: `PENDING`. Prioridad: la enviada o `MEDIUM` 
 
 **Respuesta 404**
 
-| Código | Condición |
-|---|---|
-| `TECHNICIAN_NOT_FOUND` | `technicianId` no existe |
+| Código                   | Condición                 |
+| ------------------------ | ------------------------- |
+| `TECHNICIAN_NOT_FOUND`   | `technicianId` no existe  |
 | `SERVICE_TYPE_NOT_FOUND` | `serviceTypeId` no existe |
 
 ---
@@ -222,14 +222,14 @@ Actualización parcial. Solo se modifican los campos enviados.
 
 **Body (JSON)** — Todos opcionales:
 
-| Campo | Validación adicional |
-|---|---|
-| `title` | 5–120 caracteres |
-| `description` | 10–1000 caracteres |
-| `priority` | Enum de prioridad |
-| `status` | Enum de estado |
-| `serviceTypeId` | Entero positivo; debe existir |
-| `technicianId` | Entero positivo, o `null` para desasignar |
+| Campo           | Validación adicional                      |
+| --------------- | ----------------------------------------- |
+| `title`         | 5–120 caracteres                          |
+| `description`   | 10–1000 caracteres                        |
+| `priority`      | Enum de prioridad                         |
+| `status`        | Enum de estado                            |
+| `serviceTypeId` | Entero positivo; debe existir             |
+| `technicianId`  | Entero positivo, o `null` para desasignar |
 
 **Ejemplo — asignar técnico y cambiar estado**
 
@@ -255,10 +255,10 @@ Actualización parcial. Solo se modifican los campos enviados.
 
 **Respuesta 404**
 
-| Código | Condición |
-|---|---|
-| `REQUEST_NOT_FOUND` | ID inexistente |
-| `TECHNICIAN_NOT_FOUND` | Nuevo `technicianId` inexistente |
+| Código                   | Condición                         |
+| ------------------------ | --------------------------------- |
+| `REQUEST_NOT_FOUND`      | ID inexistente                    |
+| `TECHNICIAN_NOT_FOUND`   | Nuevo `technicianId` inexistente  |
 | `SERVICE_TYPE_NOT_FOUND` | Nuevo `serviceTypeId` inexistente |
 
 ---
@@ -349,17 +349,17 @@ Solo expone `id`, `name` y `description`.
 
 Gestionados por `error.middleware.ts`:
 
-| HTTP | Código | Origen |
-|---|---|---|
-| 400 | `VALIDATION_ERROR` | Fallo de validación Zod |
-| 404 | `REQUEST_NOT_FOUND` | Solicitud inexistente |
-| 404 | `TECHNICIAN_NOT_FOUND` | Técnico inexistente |
-| 404 | `SERVICE_TYPE_NOT_FOUND` | Tipo de servicio inexistente |
-| 404 | `RESOURCE_NOT_FOUND` | Prisma `P2025` |
-| 409 | `CONFLICT` | Prisma `P2002` (unicidad) |
-| 409 | `RELATION_CONSTRAINT_ERROR` | Prisma `P2003` |
-| 500 | `INTERNAL_SERVER_ERROR` | Error no controlado |
-| 503 | `SERVICE_UNAVAILABLE` | Base de datos no disponible en `/ready` |
+| HTTP | Código                      | Origen                                  |
+| ---- | --------------------------- | --------------------------------------- |
+| 400  | `VALIDATION_ERROR`          | Fallo de validación Zod                 |
+| 404  | `REQUEST_NOT_FOUND`         | Solicitud inexistente                   |
+| 404  | `TECHNICIAN_NOT_FOUND`      | Técnico inexistente                     |
+| 404  | `SERVICE_TYPE_NOT_FOUND`    | Tipo de servicio inexistente            |
+| 404  | `RESOURCE_NOT_FOUND`        | Prisma `P2025`                          |
+| 409  | `CONFLICT`                  | Prisma `P2002` (unicidad)               |
+| 409  | `RELATION_CONSTRAINT_ERROR` | Prisma `P2003`                          |
+| 500  | `INTERNAL_SERVER_ERROR`     | Error no controlado                     |
+| 503  | `SERVICE_UNAVAILABLE`       | Base de datos no disponible en `/ready` |
 
 **Ejemplo de error de validación**
 
@@ -369,8 +369,14 @@ Gestionados por `error.middleware.ts`:
   "message": "Los datos enviados no son válidos",
   "code": "VALIDATION_ERROR",
   "errors": [
-    { "field": "title", "message": "El título debe tener al menos 5 caracteres" },
-    { "field": "description", "message": "La descripción debe tener al menos 10 caracteres" }
+    {
+      "field": "title",
+      "message": "El título debe tener al menos 5 caracteres"
+    },
+    {
+      "field": "description",
+      "message": "La descripción debe tener al menos 10 caracteres"
+    }
   ]
 }
 ```

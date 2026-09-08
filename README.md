@@ -4,19 +4,19 @@ API REST para la gestión de solicitudes de soporte TI, técnicos y tipos de ser
 
 ## Stack tecnológico
 
-| Componente | Tecnología |
-|---|---|
-| Runtime | Node.js 24 |
-| Lenguaje | TypeScript 5.9 |
-| Framework HTTP | Express 5 |
-| Base de datos | PostgreSQL 17 |
-| ORM | Prisma 7.10 |
-| Validación | Zod 4 |
-| Pruebas | Vitest + Supertest |
-| Documentación interactiva | Swagger UI (OpenAPI 3.0.3) |
-| Seguridad HTTP | Helmet, CORS, express-rate-limit |
-| Contenedores | Docker Compose (solo PostgreSQL) |
-| CI | GitHub Actions |
+| Componente                | Tecnología                       |
+| ------------------------- | -------------------------------- |
+| Runtime                   | Node.js 24                       |
+| Lenguaje                  | TypeScript 5.9                   |
+| Framework HTTP            | Express 5                        |
+| Base de datos             | PostgreSQL 17                    |
+| ORM                       | Prisma 7.10                      |
+| Validación                | Zod 4                            |
+| Pruebas                   | Vitest + Supertest               |
+| Documentación interactiva | Swagger UI (OpenAPI 3.0.3)       |
+| Seguridad HTTP            | Helmet, CORS, express-rate-limit |
+| Contenedores              | Docker Compose (solo PostgreSQL) |
+| CI                        | GitHub Actions                   |
 
 ## Requisitos previos
 
@@ -86,28 +86,28 @@ npm run check         # format:check + lint + test + build
 
 ## Comandos disponibles
 
-| Comando | Descripción |
-|---|---|
-| `npm run dev` | Servidor de desarrollo con `tsx watch` |
-| `npm run build` | Compila TypeScript a `dist/` |
-| `npm start` | Ejecuta `dist/server.js` |
-| `npm test` | Ejecuta tests con Vitest |
-| `npm run test:watch` | Vitest en modo watch |
-| `npm run lint` | ESLint sobre el proyecto |
-| `npm run format` | Formatea con Prettier |
-| `npm run format:check` | Verifica formato sin modificar |
-| `npm run check` | Pipeline local: formato, lint, tests y build |
-| `npm run db:migrate` | `prisma migrate dev` |
-| `npm run db:generate` | `prisma generate` |
-| `npm run db:seed` | Ejecuta `prisma/seed.ts` |
+| Comando                | Descripción                                  |
+| ---------------------- | -------------------------------------------- |
+| `npm run dev`          | Servidor de desarrollo con `tsx watch`       |
+| `npm run build`        | Compila TypeScript a `dist/`                 |
+| `npm start`            | Ejecuta `dist/server.js`                     |
+| `npm test`             | Ejecuta tests con Vitest                     |
+| `npm run test:watch`   | Vitest en modo watch                         |
+| `npm run lint`         | ESLint sobre el proyecto                     |
+| `npm run format`       | Formatea con Prettier                        |
+| `npm run format:check` | Verifica formato sin modificar               |
+| `npm run check`        | Pipeline local: formato, lint, tests y build |
+| `npm run db:migrate`   | `prisma migrate dev`                         |
+| `npm run db:generate`  | `prisma generate`                            |
+| `npm run db:seed`      | Ejecuta `prisma/seed.ts`                     |
 
 ## Documentación técnica
 
-| Documento | Contenido |
-|---|---|
-| [01-overview.md](./docs/01-overview.md) | Problema, objetivo, alcance y funcionalidades |
-| [02-architecture.md](./docs/02-architecture.md) | Estructura, capas y flujo de peticiones |
-| [03-data-model.md](./docs/03-data-model.md) | Entidades, relaciones y diagrama ER |
-| [04-api.md](./docs/04-api.md) | Endpoints, validaciones, respuestas y errores |
-| [05-development.md](./docs/05-development.md) | Entorno, Docker, Prisma, tests y calidad |
-| [06-decisions.md](./docs/06-decisions.md) | Decisiones técnicas y justificación |
+| Documento                                       | Contenido                                     |
+| ----------------------------------------------- | --------------------------------------------- |
+| [01-overview.md](./docs/01-overview.md)         | Problema, objetivo, alcance y funcionalidades |
+| [02-architecture.md](./docs/02-architecture.md) | Estructura, capas y flujo de peticiones       |
+| [03-data-model.md](./docs/03-data-model.md)     | Entidades, relaciones y diagrama ER           |
+| [04-api.md](./docs/04-api.md)                   | Endpoints, validaciones, respuestas y errores |
+| [05-development.md](./docs/05-development.md)   | Entorno, Docker, Prisma, tests y calidad      |
+| [06-decisions.md](./docs/06-decisions.md)       | Decisiones técnicas y justificación           |

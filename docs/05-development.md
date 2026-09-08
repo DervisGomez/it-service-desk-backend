@@ -2,23 +2,23 @@
 
 ## Requisitos
 
-| Herramienta | Versión referenciada en el proyecto |
-|---|---|
-| Node.js | 24 (CI en `.github/workflows/ci.yml`) |
-| PostgreSQL | >= 15 (`.env.example`); imagen Docker/CI: 17-alpine |
-| npm | Incluido con Node.js |
+| Herramienta | Versión referenciada en el proyecto                 |
+| ----------- | --------------------------------------------------- |
+| Node.js     | 24 (CI en `.github/workflows/ci.yml`)               |
+| PostgreSQL  | >= 15 (`.env.example`); imagen Docker/CI: 17-alpine |
+| npm         | Incluido con Node.js                                |
 
 ## Variables de entorno
 
 Definidas en `src/config/env.ts`:
 
-| Variable | Requerida | Predeterminado | Descripción |
-|---|---|---|---|
-| `DATABASE_URL` | Sí | — | Conexión PostgreSQL para la aplicación y Prisma CLI |
-| `DATABASE_URL_TEST` | Sí | — | Conexión para tests de integración (`tests/setup/test-prisma.ts`) |
-| `PORT` | No | `3000` | Puerto HTTP (entero 1–65535) |
-| `NODE_ENV` | No | `development` | Entorno de ejecución |
-| `CORS_ORIGIN` | No | `http://localhost:4200` | Origen permitido por CORS |
+| Variable            | Requerida | Predeterminado          | Descripción                                                       |
+| ------------------- | --------- | ----------------------- | ----------------------------------------------------------------- |
+| `DATABASE_URL`      | Sí        | —                       | Conexión PostgreSQL para la aplicación y Prisma CLI               |
+| `DATABASE_URL_TEST` | Sí        | —                       | Conexión para tests de integración (`tests/setup/test-prisma.ts`) |
+| `PORT`              | No        | `3000`                  | Puerto HTTP (entero 1–65535)                                      |
+| `NODE_ENV`          | No        | `development`           | Entorno de ejecución                                              |
+| `CORS_ORIGIN`       | No        | `http://localhost:4200` | Origen permitido por CORS                                         |
 
 **Nota:** `.env.example` solo documenta `DATABASE_URL`. La aplicación falla al arrancar si falta `DATABASE_URL_TEST`; configúrala apuntando a una base de datos de prueba separada o a la misma instancia con otro esquema/base.
 
@@ -36,12 +36,12 @@ DATABASE_URL_TEST="postgresql://user:password@localhost:5432/it_service_desk_tes
 
 `docker-compose.yml` levanta únicamente PostgreSQL. Variables esperadas en el entorno del host (p. ej. archivo `.env` junto al compose):
 
-| Variable | Uso |
-|---|---|
-| `POSTGRES_DB` | Nombre de la base de datos |
-| `POSTGRES_USER` | Usuario |
-| `POSTGRES_PASSWORD` | Contraseña |
-| `POSTGRES_PORT` | Puerto expuesto en el host |
+| Variable            | Uso                        |
+| ------------------- | -------------------------- |
+| `POSTGRES_DB`       | Nombre de la base de datos |
+| `POSTGRES_USER`     | Usuario                    |
+| `POSTGRES_PASSWORD` | Contraseña                 |
+| `POSTGRES_PORT`     | Puerto expuesto en el host |
 
 ```bash
 docker compose up -d
@@ -92,20 +92,20 @@ Framework: **Vitest** (`vitest.config.ts` excluye `dist/**`).
 
 ### Estructura
 
-| Tipo | Ubicación | Alcance |
-|---|---|---|
-| Unitarios | `tests/unit/` | Servicios con repositorios mockeados |
-| Integración | `tests/integration/` | HTTP con Supertest |
+| Tipo        | Ubicación            | Alcance                              |
+| ----------- | -------------------- | ------------------------------------ |
+| Unitarios   | `tests/unit/`        | Servicios con repositorios mockeados |
+| Integración | `tests/integration/` | HTTP con Supertest                   |
 
 ### Tests de integración
 
 Requieren base de datos accesible vía `DATABASE_URL_TEST` con migraciones y seed aplicados.
 
-| Archivo | Endpoints probados |
-|---|---|
-| `health.integration.test.ts` | `/api/health`, `/api/health/ready` (usa `app` completa) |
+| Archivo                       | Endpoints probados                                           |
+| ----------------------------- | ------------------------------------------------------------ |
+| `health.integration.test.ts`  | `/api/health`, `/api/health/ready` (usa `app` completa)      |
 | `request.integration.test.ts` | CRUD de solicitudes (router de test con `DATABASE_URL_TEST`) |
-| `catalog.integration.test.ts` | `/api/technicians`, `/api/service-types` |
+| `catalog.integration.test.ts` | `/api/technicians`, `/api/service-types`                     |
 
 El setup de solicitudes (`tests/setup/`) inyecta `RequestRepository` y `RequestService` con `testPrisma`.
 
@@ -116,10 +116,10 @@ npm run test:watch
 
 ## Lint y formato
 
-| Herramienta | Configuración | Comando |
-|---|---|---|
-| ESLint 10 | `eslint.config.js` (typescript-eslint + prettier) | `npm run lint` |
-| Prettier 3 | `.prettierrc.json` (80 cols, comillas dobles, trailing comma) | `npm run format` / `format:check` |
+| Herramienta | Configuración                                                 | Comando                           |
+| ----------- | ------------------------------------------------------------- | --------------------------------- |
+| ESLint 10   | `eslint.config.js` (typescript-eslint + prettier)             | `npm run lint`                    |
+| Prettier 3  | `.prettierrc.json` (80 cols, comillas dobles, trailing comma) | `npm run format` / `format:check` |
 
 ESLint ignora `dist/` y `node_modules/`. Regla destacada: `@typescript-eslint/no-unused-vars` con excepción para args que empiezan por `_`.
 

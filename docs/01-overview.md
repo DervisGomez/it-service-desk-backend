@@ -13,7 +13,7 @@ Exponer una API REST que permita:
 - Obtener métricas agregadas por estado para un panel de control.
 - Verificar disponibilidad de la API y conectividad con la base de datos.
 
-El proyecto se describe en `package.json` como *"REST API for IT Service Desk technical assessment"*.
+El proyecto se describe en `package.json` como _"REST API for IT Service Desk technical assessment"_.
 
 ## Alcance actual
 
@@ -41,14 +41,14 @@ El proyecto se describe en `package.json` como *"REST API for IT Service Desk te
 
 ### Solicitudes
 
-| Operación | Descripción |
-|---|---|
-| Listar | Paginado con filtros por texto, estado, prioridad, técnico y tipo de servicio |
-| Obtener por ID | Incluye relaciones `technician` y `serviceType` |
-| Crear | Requiere título, descripción y `serviceTypeId`; `technicianId` y `priority` son opcionales |
-| Actualizar | Campos parciales; permite desasignar técnico con `technicianId: null` |
-| Eliminar | Borrado físico del registro |
-| Dashboard | Conteo total y desglose por cada estado |
+| Operación      | Descripción                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| Listar         | Paginado con filtros por texto, estado, prioridad, técnico y tipo de servicio              |
+| Obtener por ID | Incluye relaciones `technician` y `serviceType`                                            |
+| Crear          | Requiere título, descripción y `serviceTypeId`; `technicianId` y `priority` son opcionales |
+| Actualizar     | Campos parciales; permite desasignar técnico con `technicianId: null`                      |
+| Eliminar       | Borrado físico del registro                                                                |
+| Dashboard      | Conteo total y desglose por cada estado                                                    |
 
 ### Catálogos
 
