@@ -6,11 +6,11 @@ const { repository } = vi.hoisted(() => ({
   },
 }));
 
-vi.mock("./health.repository.js", () => ({
+vi.mock("../../src/features/health/health.repository.js", () => ({
   healthRepository: repository,
 }));
 
-import { HealthService } from "./health.service.js";
+import { HealthService } from "../../src/features/health/health.service.js";
 
 describe("HealthService", () => {
   let service: HealthService;
