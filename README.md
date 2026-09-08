@@ -2,6 +2,21 @@
 
 API REST para la gestión de solicitudes de soporte TI, técnicos y tipos de servicio. Desarrollada como parte de una evaluación técnica Full Stack.
 
+## Funcionalidades
+
+- CRUD completo de solicitudes de soporte.
+- Asignación de técnicos.
+- Asociación con tipos de servicio.
+- Filtrado por estado y prioridad.
+- Búsqueda de solicitudes.
+- Paginación.
+- Dashboard con métricas.
+- Validación de datos con Zod.
+- Manejo centralizado de errores.
+- Documentación OpenAPI/Swagger.
+- Tests unitarios y de integración.
+- Protección HTTP mediante Helmet, CORS y rate limiting.
+
 ## Stack tecnológico
 
 | Componente                | Tecnología                       |
@@ -17,6 +32,21 @@ API REST para la gestión de solicitudes de soporte TI, técnicos y tipos de ser
 | Seguridad HTTP            | Helmet, CORS, express-rate-limit |
 | Contenedores              | Docker Compose (solo PostgreSQL) |
 | CI                        | GitHub Actions                   |
+
+## Arquitectura
+
+El backend utiliza una arquitectura organizada por funcionalidades
+(feature-based), con separación de responsabilidades entre:
+
+Routes → Controllers → Services → Repositories → Prisma → PostgreSQL
+
+Cada funcionalidad mantiene sus componentes relacionados dentro de
+su propio módulo.
+
+La API se comunica exclusivamente mediante HTTP/REST y utiliza
+respuestas JSON con una estructura consistente.
+
+Para más detalles, consultar [02-architecture.md](./docs/02-architecture.md).
 
 ## Requisitos previos
 
@@ -100,6 +130,25 @@ npm run check         # format:check + lint + test + build
 | `npm run db:migrate`   | `prisma migrate dev`                         |
 | `npm run db:generate`  | `prisma generate`                            |
 | `npm run db:seed`      | Ejecuta `prisma/seed.ts`                     |
+
+## Calidad y CI
+
+El proyecto incluye controles automatizados para mantener la calidad
+del código:
+
+- Prettier para formato.
+- ESLint para análisis estático.
+- Vitest para pruebas unitarias.
+- Supertest para pruebas HTTP de integración.
+- TypeScript para tipado estático.
+- GitHub Actions para ejecutar automáticamente formato, lint, tests
+  y build.
+- PostgreSQL se ejecuta como servicio durante CI.
+
+El comando local equivalente es:
+
+```bash
+npm run check
 
 ## Documentación técnica
 
